@@ -1,0 +1,5 @@
+CREATE TABLE USER (id int AUTO_INCREMENT,username varchar(40),password varchar(30),PRIMARY KEY (id));
+
+CREATE TABLE EMPLOYEE (EmployeeID int AUTO_INCREMENT,firstname varchar(20),lastname varchar(20),username varchar(40),contact varchar(15),password varchar(40),dob date,address varchar(100),PRIMARY KEY (EmployeeID));
+alter table EMPLOYEE auto_increment = 1;
+ UPDATE EMPLOYEE SET EmployeeID=3 WHERE firstname="wad";
