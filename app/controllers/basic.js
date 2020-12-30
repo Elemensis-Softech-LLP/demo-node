@@ -51,7 +51,6 @@ async function login(req, res) {
     try {
         let user = req.body;        
         let recordExist = await query(`SELECT username, password FROM EMPLOYEE WHERE username='${user.username}' `);       
-
         if (recordExist.length) {
             if (recordExist[0].password === md5(user.password)) {                               
                 const userName = user.username;                
@@ -72,8 +71,8 @@ async function login(req, res) {
         } else {
             res.send({
                 'success': false,
-                'message': 'User not Registered'
-            }); address
+                'message': 'employee is not Registered'
+            }); 
         }
 
     } catch (error) {        
