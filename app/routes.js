@@ -10,7 +10,7 @@ module.exports = function(app) {
     app.get("/getEmployeeDetails", user.getEmployeeDetails);// 4
     app.put("/updateEmployee", user.updateEmployee);// 5
     app.post("/addEmployee", user.addEmployee);// 6
-    app.delete("/deleteEmployee", user.deleteEmployee);// 7
+    app.delete("/deleteEmployee/:id", user.deleteEmployee);// 7
     app.get("/verifyToken",common.verifyToken);// 4
 
 }

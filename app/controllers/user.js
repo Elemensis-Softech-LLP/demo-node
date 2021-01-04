@@ -92,7 +92,7 @@ async function addEmployee(req, res) {
             });
         } else {
             newUser.dob = new Date(newUser.dob).getFullYear() + '-' + (new Date(newUser.dob).getMonth() + 1) + '-' + new Date(newUser.dob).getDate();
-            let result = await query(`INSERT INTO EMPLOYEE(firstname,lastname,username,contact,password,dob,address) VALUES('${newUser.firstname}','${newUser.lastname}','${newUser.username}','${newUser.contact}','${md5(newUser.password)}','${newUser.dob}','${newUser.address}')`);
+            let result = await query(`INSERT INTO EMPLOYEE(firstname,lastname,username,contact,dob,address) VALUES('${newUser.firstname}','${newUser.lastname}','${newUser.username}','${newUser.contact}','${newUser.dob}','${newUser.address}')`);
 
             res.send({
                 'success': true,
@@ -116,8 +116,8 @@ async function addEmployee(req, res) {
 */
 async function deleteEmployee(req, res) {
     try {
-        let newUser = req.body;
-        let recordExist = await query(`DELETE FROM EMPLOYEE WHERE EmployeeID='${newUser.EmployeeID}' `);
+        console.log(req.params.id);
+        let recordExist = await query(`DELETE FROM EMPLOYEE WHERE EmployeeID='${req.params.id}' `);
         res.send({
             'success': true,
             'msg': 'Deleting Employee',
