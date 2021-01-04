@@ -24,8 +24,9 @@ async function registration(req, res) {
             });
         } else {
             newUser.dob = new Date(newUser.dob).getFullYear() + '-' + (new Date(newUser.dob).getMonth() + 1) + '-' + new Date(newUser.dob).getDate();
-            let result = await query(`INSERT INTO EMPLOYEE(firstname,lastname,username,contact,password,dob,address) VALUES('${newUser.firstname}','${newUser.lastname}','${newUser.username}','${newUser.contact}','${md5(newUser.password)}','${newUser.dob}','${newUser.address}')`);
-            
+            newUser.dateOfJoin = new Date(newUser.dateOfJoin).getFullYear() + '-' + (new Date(newUser.dateOfJoin).getMonth() + 1) + '-' + new Date(newUser.dateOfJoin).getDate();
+            let result = await query(`INSERT INTO EMPLOYEE(firstname,lastname,username,contact,password,dob,address,isActive,dateOfJoin) VALUES('${newUser.firstname}','${newUser.lastname}','${newUser.username}','${newUser.contact}','${md5(newUser.password)}','${newUser.dob}','${newUser.address}','${newUser.isActive}','${newUser.dateOfJoin}')`);
+            console.log("employee...",result);
             res.send({
                 'success': true,
                 'message': 'Registration Successful',
