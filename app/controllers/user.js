@@ -14,7 +14,7 @@ module.exports = {
 async function getEmployeeList(req, res) {
     try {
         let newUser = req.body;
-        let recordExist = await query(`SELECT *, DATE_FORMAT(dob,'%Y/%d/%m') as dob ,DATE_FORMAT(dateOfJoin,'%Y/%d/%m') as dateOfJoin  FROM EMPLOYEE `);
+        let recordExist = await query(`SELECT *, DATE_FORMAT(dob,'%Y/%m/%d') as dob ,DATE_FORMAT(dateOfJoin,'%Y/%m/%d') as dateOfJoin FROM EMPLOYEE `);
         res.send({
             'success': true,
             'msg': 'EmployeeList recieved',
@@ -35,8 +35,8 @@ async function getEmployeeList(req, res) {
 */
 async function getEmployeeDetails(req, res) {
     try {
-        let newUser = req.body;
-        let recordExist = await query(`SELECT * FROM EMPLOYEE WHERE username='${newUser.username}' OR contact='${newUser.contact}' `);
+        console.log(req.params.id);
+        let recordExist = await query(`SELECT * FROM EMPLOYEE WHERE EmployeeID='${req.params.id}'`);
         res.send({
             'success': true,
             'msg': 'Employee Details recieved',
@@ -59,11 +59,13 @@ async function getEmployeeDetails(req, res) {
 async function updateEmployee(req, res) {
     try {
         let newUser = req.body;
-        let recordExist = await query(`UPDATE EMPLOYEE SET firstname='${newUser.firstname}',lastname='${newUser.lastname}',username='${newUser.username}',contact='${newUser.contact}',address='${newUser.address}' WHERE EmployeeID='${newUser.EmployeeID}'`);
+        newUser.dob = new Date(newUser.dob).getFullYear() + '-' + (new Date(newUser.dob).getMonth() + 1) + '-' + new Date(newUser.dob).getDate();
+        newUser.dateOfJoin = new Date(newUser.dateOfJoin).getFullYear() + '-' + (new Date(newUser.dateOfJoin).getMonth() + 1) + '-' + new Date(newUser.dateOfJoin).getDate();
+        let recordExist = await query(`UPDATE EMPLOYEE SET firstname='${newUser.firstname}',lastname='${newUser.lastname}',username='${newUser.username}',contact='${newUser.contact}',address='${newUser.address}',dob='${newUser.dob}',dateOfJoin='${newUser.dateOfJoin}',isActive='${newUser.isActive}' WHERE EmployeeID='${newUser.EmployeeID}'`);
         res.send({
             'success': true,
             'msg': 'Employee Update',
-            Userdata: recordExist
+            Userdata: recordExist[0]
         });
 
     } catch (error) {
@@ -82,7 +84,7 @@ async function addEmployee(req, res) {
     try {
         let newUser = req.body;
 
-        let recordExist = await query(`SELECT username,contact,firstname,lastname,dob,address FROM EMPLOYEE WHERE username='${newUser.username}' OR contact='${newUser.contact}'`);
+        let recordExist = await query(`SELECT username,contact,firstname,lastname,dob,address,dateOfJoin FROM EMPLOYEE WHERE username='${newUser.username}' OR contact='${newUser.contact}'`);
 
 
         if (recordExist.length) {
@@ -92,6 +94,7 @@ async function addEmployee(req, res) {
             });
         } else {
             newUser.dob = new Date(newUser.dob).getFullYear() + '-' + (new Date(newUser.dob).getMonth() + 1) + '-' + new Date(newUser.dob).getDate();
+            newUser.dateOfJoin = new Date(newUser.dateOfJoin).getFullYear() + '-' + (new Date(newUser.dateOfJoin).getMonth() + 1) + '-' + new Date(newUser.dateOfJoin).getDate();
             let result = await query(`INSERT INTO EMPLOYEE(firstname,lastname,username,contact,dob,address,dateOfJoin) VALUES('${newUser.firstname}','${newUser.lastname}','${newUser.username}','${newUser.contact}','${newUser.dob}','${newUser.address}','${newUser.dateOfJoin}')`);
 
             res.send({

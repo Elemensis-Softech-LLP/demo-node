@@ -51,16 +51,19 @@ async function registration(req, res) {
 async function login(req, res) {
     try {
         let user = req.body;        
-        let recordExist = await query(`SELECT username, password FROM EMPLOYEE WHERE username='${user.username}' `);       
+        let recordExist = await query(`SELECT username, password, role FROM EMPLOYEE WHERE username='${user.username}' `);       
         if (recordExist.length) {
             if (recordExist[0].password === md5(user.password)) {                               
-                const userName = user.username;                
+                const userName = user.username;
+                const role = recordExist[0].role;             
+                
                 const token = jwt.sign(JSON.parse(JSON.stringify(recordExist[0])), tokenConfig.secret);
 
                 res.send({
                     'success': true,
                     token,
                     username: userName,
+                    role:role,
                     'message': 'Login Successful!'
                 });
             } else {
