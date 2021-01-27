@@ -35,8 +35,8 @@ async function getEmployeeList(req, res) {
 */
 async function getEmployeeDetails(req, res) {
     try {
-        console.log(req.params.id);
-        let recordExist = await query(`SELECT * FROM EMPLOYEE WHERE EmployeeID='${req.params.id}'`);
+        let newUser = req.body;
+        let recordExist = await query(`SELECT * FROM EMPLOYEE WHERE username='${newUser.username}'`);
         res.send({
             'success': true,
             'msg': 'Employee Details recieved',
