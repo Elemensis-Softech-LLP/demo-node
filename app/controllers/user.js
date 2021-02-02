@@ -1,3 +1,4 @@
+const dbConfig = require("../config/appConfig").db;
 let md5 = require('md5');
 console.log(md5('message'));
 module.exports = {
