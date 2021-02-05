@@ -1,9 +1,10 @@
 module.exports = {
-    upload
+    uploadImage
 }
 
-async function upload(req, res) {
+async function uploadImage(req, res) {
     try {
+        console.log("Upload Image....");
         var multer = require('multer');   //FOR FILE UPLOAD
         var storage = multer.diskStorage({ //multers disk storage settings
             destination: function (req, file, cb) {
@@ -18,12 +19,13 @@ async function upload(req, res) {
 
         var upload = multer({ //multer settings
             storage: storage
-        }).single('image');
+        }).single('file');
           
         upload(req, res, function (err) {
-            // console.log("my error============", err)
-            const path = req.file.path;
+            console.log("my error============", req.file)
+            const path = req.file;
             if (err) {
+                console.log("error",err);
                 res.send({
                     'success': false,
                     'message': 'an Error occured'
@@ -38,7 +40,7 @@ async function upload(req, res) {
 
         });
     } catch (error) {
-
+        console.log("error",error);
         res.status(500).send({
             'success': false,
             'message': 'Error! invalid',

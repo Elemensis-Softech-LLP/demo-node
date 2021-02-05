@@ -15,7 +15,5 @@ module.exports = function (app) {
   app.post("/addEmployee", common.verifyToken, emp.addEmployee);// 6
   app.delete("/deleteEmployee/:id", emp.deleteEmployee);// 7
   app.get("/verifyToken", common.verifyToken);//8  
-  app.post("/upload", upload.upload); 
-  
-  
+  app.post("/uploadImage", upload.uploadImage); //9    
 }
