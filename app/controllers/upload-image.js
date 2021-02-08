@@ -14,18 +14,18 @@ async function uploadImage(req, res) {
                 var datetimestamp = Date.now();
                 cb(null, file.originalname);
             }
-            
         });
 
         var upload = multer({ //multer settings
             storage: storage
         }).single('file');
-          
+
         upload(req, res, function (err) {
-            console.log("my error============", req.file)
+            // console.log("my error============", req.file)
             const path = req.file;
+            console.log("file....", req.file);
             if (err) {
-                console.log("error",err);
+                console.log("error", err);
                 res.send({
                     'success': false,
                     'message': 'an Error occured'
@@ -40,7 +40,7 @@ async function uploadImage(req, res) {
 
         });
     } catch (error) {
-        console.log("error",error);
+        console.log("error", error);
         res.status(500).send({
             'success': false,
             'message': 'Error! invalid',
