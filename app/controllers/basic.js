@@ -58,7 +58,7 @@ async function login(req, res) {
                 const role = recordExist[0].role;             
                 
                 const token = jwt.sign(JSON.parse(JSON.stringify(recordExist[0])), tokenConfig.secret);
-
+          
                 res.send({
                     'success': true,
                     token,

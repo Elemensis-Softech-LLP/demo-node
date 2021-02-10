@@ -11,8 +11,16 @@ async function uploadImage(req, res) {
                 cb(null, './app/public/'); //image storage path
             },
             filename: function (req, file, cb) {
-                var datetimestamp = Date.now();
-                cb(null, file.originalname);
+                // var datetimestamp = Date.now();
+                var d = Date(); 
+    
+                // Converting the number value to string 
+                datetimestamp = d.toString()  
+                  
+                // Printing the current date 
+                // document.write("The current date is: " + datetimestamp)              
+                   console.log("date...",datetimestamp);
+                cb(null,'binali_'+datetimestamp+file.originalname);
             }
         });
 

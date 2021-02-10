@@ -36,7 +36,7 @@ async function getEmployeeList(req, res) {
 */
 async function getEmployeeDetails(req, res) {
     try {
-        let newUser = req.params.userName;
+        let newUser = req.query.userName;
         console.log("new user...",newUser);
         let recordExist = await query(`SELECT *, DATE_FORMAT(dob,'%Y/%m/%d') as dob ,DATE_FORMAT(dateOfJoin,'%Y/%m/%d') as dateOfJoin FROM EMPLOYEE WHERE username='${newUser}'`);
         res.send({
